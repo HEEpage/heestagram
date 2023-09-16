@@ -4,9 +4,13 @@
 <div id="signup">
     <form method="POST" enctype="multipart/form-data">
         <h1>Hee-stagram</h1>
+        <h3>Sign Up 📝</h3>
+        <br>
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-signup">회원가입</button>
+        <br>
+        <a href="/users/login/">로그인 페이지로 이동</a>
     </form>
 </div>
 {% endblock content %}
