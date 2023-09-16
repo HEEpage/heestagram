@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Add
     'users',
+    'posts',
 ]
 
 MIDDLEWARE = [

@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('', index),
     path('users/', include('users.urls')),
+    path('posts/', include('posts.urls')),
 ]
 
 urlpatterns += static(
