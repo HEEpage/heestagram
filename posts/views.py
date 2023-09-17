@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from posts.models import Post, Comment
-from posts.forms import CommentForm
+from posts.forms import CommentForm, PostForm
 
 def feeds(request) :
     # 로그인한 사용자가 아닐 경우 (AnonymousUser인 경우)
@@ -50,3 +50,11 @@ def comment_delete(request, comment_id) :
         return HttpResponseRedirect(f'/posts/feeds/#post-{comment.post.id}')
     else :
         return HttpResponseForbidden('이 댓글을 삭제할 권한이 없습니다.')
+
+
+def post_add(request) :
+    form = PostForm()
+    context = {
+        'form' : form,
+    }
+    return render(request, 'posts/post_add.html', context)

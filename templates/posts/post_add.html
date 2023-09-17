@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav>
+    <h1>Hee-stagram</h1>
+</nav>
+
+<div id="post-add">
+    <h2>Post 작성</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">게시</button>
+    </form>
+</div>
+{% endblock content %}
