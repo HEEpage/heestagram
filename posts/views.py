@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from posts.models import Post
+from posts.models import Post, Comment
 from posts.forms import CommentForm
 
 def feeds(request) :
@@ -39,3 +39,14 @@ def comment_add(request) :
 
         # 생성 완료 후 피드 페이지로 이동
         return HttpResponseRedirect(f'/posts/feeds/#post-{comment.post.id}')
+
+
+@require_POST
+def comment_delete(request, comment_id) :
+    comment = Comment.objects.get(id=comment_id)
+
+    if comment.user == request.user :
+        comment.delete()
+        return HttpResponseRedirect(f'/posts/feeds/#post-{comment.post.id}')
+    else :
+        return HttpResponseForbidden('이 댓글을 삭제할 권한이 없습니다.')

@@ -57,6 +57,14 @@
                         <li>
                             <span>{{ comment.user.username }}</span>
                             <span>{{ comment.content }}</span>
+
+                            <!-- 댓글 삭제 Form 추가 -->
+                            {% if user == comment.user %}
+                                <form method="POST" action="/posts/comment_delete/{{ comment.id }}">
+                                    {% csrf_token %}
+                                    <button type="submit">삭제</button>
+                                </form>
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>
