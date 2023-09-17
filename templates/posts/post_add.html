@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<nav>
-    <h1>Hee-stagram</h1>
+<nav class="navbar">
+    <h1>
+        <a href="/posts/feeds/">Hee-stagram</a>
+    </h1>
+    <a href="/users/logout/">Logout</a>
 </nav>
 
 <div id="post-add">
     <h2>Post 작성</h2>
-    <form method="POST">
+    <br>
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        <div>
+            <label for="id_images">이미지</label>
+            <input type="file" id="id_images" name="images" multiple>
+        </div>
         {{ form.as_p }}
         <button type="submit">게시</button>
     </form>
