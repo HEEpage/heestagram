@@ -12,7 +12,7 @@ def feeds(request) :
         return redirect('/users/login/')
     
     # 모든 글 목록을 템플릿으로 전달
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created')
     comment_form = CommentForm()
 
     context = {
