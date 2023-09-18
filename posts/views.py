@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.urls import reverse
 
 from posts.models import Post, Comment, PostImage
 from posts.forms import CommentForm, PostForm
@@ -9,7 +10,7 @@ def feeds(request) :
     # 로그인한 사용자가 아닐 경우 (AnonymousUser인 경우)
     if not request.user.is_authenticated :
         # /users/login/으로 이동
-        return redirect('/users/login/')
+        return redirect('users:login')
     
     # 모든 글 목록을 템플릿으로 전달
     posts = Post.objects.all().order_by('-created')
@@ -38,7 +39,10 @@ def comment_add(request) :
         comment.save()
 
         # 생성 완료 후 피드 페이지로 이동
-        return HttpResponseRedirect(f'/posts/feeds/#post-{comment.post.id}')
+        # redirect() 함수가 아닌 HttpResponseRedirect는 URL pattern name을 사용할 수 없다.
+        # 이 경우, reverse() 함수로 URL을 만든 후, 뒤에 추가로 붙일 주소를 직접 입력해야 한다.
+        url = reverse('posts:feeds') + f'#post-{comment.post.id}'
+        return HttpResponseRedirect(url)
 
 
 @require_POST
@@ -47,7 +51,8 @@ def comment_delete(request, comment_id) :
 
     if comment.user == request.user :
         comment.delete()
-        return HttpResponseRedirect(f'/posts/feeds/#post-{comment.post.id}')
+        url = reverse('posts:feeds') + f'#post-{comment.post.id}'
+        return HttpResponseRedirect(url)
     else :
         return HttpResponseForbidden('이 댓글을 삭제할 권한이 없습니다.')
 
@@ -76,7 +81,7 @@ def post_add(request) :
             
             # 모든 PostImage와 Post 생성이 완료되면
             # 피드 페이지로 이동하여 생성된 Post의 위치로 이동하도록 한다.
-            url = f'/posts/feeds/#post-{post.id}'
+            url = reverse('posts:feeds') + f'#post-{post.id}'
             return HttpResponseRedirect(url)
     
     # GET 요청일 때는 빈 form을 보여주도록 한다.

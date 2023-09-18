@@ -3,9 +3,9 @@
 {% block content %}
 <nav class="navbar">
     <h1>
-        <a href="/posts/feeds/">Hee-stagram</a>
+        <a href="{% url 'posts:feeds' %}">Hee-stagram</a>
     </h1>
-    <a href="/users/logout/">Logout</a>
+    <a href="{% url 'users:logout' %}">Logout</a>
 </nav>
 
 <div id="post-add">

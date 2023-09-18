@@ -7,7 +7,7 @@ from users.models import User
 def login_view(request) :
     # 이미 로그인되어 있다면
     if request.user.is_authenticated :
-        return redirect('/posts/feeds/')
+        return redirect('posts:feeds')
     
     if request.method == 'POST' :
         # LoginForm 인스턴스를 만들며, 입력 데이터는 request.POST를 사용
@@ -26,7 +26,7 @@ def login_view(request) :
             if user :
                 # 로그인 처리 후, 피드 페이지로 redirect
                 login(request, user)
-                return redirect('/posts/feeds/')
+                return redirect('posts:feeds')
             # 해당 사용자가 없다면 form에 에러 추가
             else :
                 form.add_error(None, '입력한 자격증명에 해당하는 사용자가 없습니다.')
@@ -49,7 +49,7 @@ def logout_view(request) :
     # logout 함수 호출에 request를 전달한다
     logout(request)
     # logout 처리 후, 로그인 페이지로 이동한다
-    return redirect('/users/login/')
+    return redirect('users:login')
 
 
 def signup(request) :
@@ -60,7 +60,7 @@ def signup(request) :
         # Form에 에러가 없다면 User를 생성하고 로그인 페이지로 이동한다.
         if form.is_valid() :
             form.save()
-            return redirect('/users/login/')
+            return redirect('users:login')
 
         # POST 요청에서 Form이 유효하지 않다면, 아래의 context = ... 부분으로 이동한다.
 
