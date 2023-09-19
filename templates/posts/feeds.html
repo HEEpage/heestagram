@@ -13,7 +13,10 @@
 <div id="feeds" class="post-container">
     <!-- 전달된 Post QuerySet 객체를 순회 -->
     {% for post in posts %}
-        {% include 'posts/post.html' %}
+        {% with post.id|stringformat:"s" as post_id %}
+            {% url 'posts:feeds' as action_redirect_to %}
+            {% include 'posts/post.html' with action_redirect_url=action_redirect_to|add:'#post-'|add:post_id %}
+        {% endwith %}
     {% endfor %}
 </div>
 {% endblock content %}

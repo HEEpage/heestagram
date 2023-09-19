@@ -38,11 +38,14 @@ def comment_add(request) :
         # DB에 Comment 객체 저장
         comment.save()
 
-        # 생성 완료 후 피드 페이지로 이동
-        # redirect() 함수가 아닌 HttpResponseRedirect는 URL pattern name을 사용할 수 없다.
-        # 이 경우, reverse() 함수로 URL을 만든 후, 뒤에 추가로 붙일 주소를 직접 입력해야 한다.
-        url = reverse('posts:feeds') + f'#post-{comment.post.id}'
-        return HttpResponseRedirect(url)
+        # URL로 'next' 값을 전달받았다면, 댓글 작성 완료 후 전달받은 값으로 이동한다.
+        if request.GET.get('next') :
+            url_next = request.GET.get('next')
+        # 'next' 값을 전달받지 않았다면, 피드 페이지의 글 위치로 이동한다.
+        else :
+            url_next = reverse('posts:feeds') + f'#post-{comment.post.id}'
+
+        return HttpResponseRedirect(url_next)
 
 
 @require_POST

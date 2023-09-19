@@ -59,7 +59,7 @@
     <small>{{ post.created }}</small>
 
     <div class="post-comment-create">
-        <form method="POST" action="{% url 'posts:comment_add' %}">
+        <form method="POST" action="{% url 'posts:comment_add' %}?next={{ action_redirect_url }}">
             {% csrf_token %}
             <!-- 사용자가 직접 입력하지 않는 고정된 데이터를 form 내부에 위치 -->
             <input type="hidden" name="post" value="{{ post.id }}">
