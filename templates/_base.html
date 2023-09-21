@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Hee-stagram</title>
+
+    {% block style %}
+    {% endblock style %}
+</head>
+<body>
+    {% block base_content %}
+    {% endblock base_content %}
+</body>
+</html>
+
+{% block script %}
+{% endblock script %}

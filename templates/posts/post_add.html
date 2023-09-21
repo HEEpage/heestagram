@@ -1,13 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_nav.html' %}
 
 {% block content %}
-<nav class="navbar">
-    <h1>
-        <a href="{% url 'posts:feeds' %}">Hee-stagram</a>
-    </h1>
-    <a href="{% url 'users:logout' %}">Logout</a>
-</nav>
-
 <div id="post-add">
     <h2>Post 작성</h2>
     <br>
