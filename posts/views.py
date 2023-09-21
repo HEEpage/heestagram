@@ -134,3 +134,20 @@ def post_detail(request, post_id) :
         'comment_form' : comment_form,
     }
     return render(request, 'posts/post_detail.html', context)
+
+
+def post_like(request, post_id) :
+    post = Post.objects.get(id=post_id)
+    user = request.user
+
+    # 사용자가 '좋아요를 누른 Post 목록'에 '좋아요 버튼을 누른 Post'가 존재한다면
+    if user.like_posts.filter(id=post_id).exists() :
+        # 좋아요 목록에서 삭제
+        user.like_posts.remove(post)
+    # 존재하지 않는다면 좋아요 목록에 추가
+    else :
+        user.like_posts.add(post)
+
+    # next로 값이 전달되었다면 해당 위치로, 전달되지 않았다면 피드 페이지에서 해당 Post 위치로 이동한다.
+    url_next = request.GET.get('next') or reverse('posts:feeds') + f'#post-{post.id}'
+    return HttpResponseRedirect(url_next)
