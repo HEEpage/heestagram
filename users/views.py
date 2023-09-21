@@ -75,3 +75,7 @@ def signup(request) :
         'form' : form,
     }
     return render(request, 'users/signup.html', context)
+
+
+def profile(request, user_id) :
+    return render(request, 'users/profile.html')
