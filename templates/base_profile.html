@@ -21,7 +21,10 @@
                         {{ user.followers.count }}</a>
                     </dd>
                     <dt>Following</dt>
-                    <dd>{{ user.following.count }}</dd>
+                    <dd>
+                        <a href="{% url 'users:following' user_id=user.id %}">
+                        {{ user.following.count }}</a>
+                        </dd>
                 </dl>
             </div>
             <p>{{ user.short_description }}</p>
